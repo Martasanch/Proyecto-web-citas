@@ -1,0 +1,1 @@
+1. Puedo borrar node_modules y cada vez que inicie un proyecto -> Abrir terminal: npm install para reconstruirla

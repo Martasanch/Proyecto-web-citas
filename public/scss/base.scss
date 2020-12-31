@@ -1,0 +1,42 @@
+
+
+body{
+    background-color: rgb(255, 168, 168);
+}
+
+header {
+    position: fixed;
+    top:0px;
+    left:0px;
+    width: 100%;
+    nav{
+        background-color: #000;
+        border-bottom:5px solid #F3D94E;
+    }    
+    a,a:hover{
+        color:#F3D94E;
+        margin-left:10px;
+    }
+}
+
+main{
+    
+    .container{
+        margin-top:100px;
+        .row{
+            
+            background: rgb(207, 221, 130);
+          .col-12{
+              padding-top:50px;
+              padding-bottom: 50px;
+              form{
+                  width: 600px;
+                  font-size: 20px;
+                  }
+              
+          }  
+            
+        }
+    }
+}
+

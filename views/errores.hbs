@@ -1,0 +1,35 @@
+  <main>
+    <div class="container">
+      
+    <div class="row d-flex align-items-center justify-content-center">
+      <div class="row d-flex justify-content-center">
+        <div class="col-12">
+            <h4>Lo sentimos, ha cometido los siguientes errores al introducir sus datos en el formulario.<br>
+              Por favor, revíselos, y vuelva a intentarlo:<br>
+            </h4>
+
+              <h4>
+              {{#each errores}}
+              <ul>
+              <li>
+                {{mensaje1}}
+                {{mensaje2}}
+                {{mensaje3}}
+                {{mensaje4}}
+              </li>
+              </ul>
+              {{/each}}
+              </h4>
+              
+
+        </div>
+
+    <div class="row d-flex align-items-centerjustify-content-center">
+        <div class="col-12 d-flex align-items-centerjustify-content-center">
+            <form method="get" action="/">
+            <button class= "btn-secondary">Volver al formulario
+            </form>
+        </div>
+    </div>      
+    </div>
+  </main>
