@@ -34,13 +34,13 @@ rtMain.post("/procesar", function (req, res){
     
 
 
-    let element =  {
+    let dia =  {
     fecha: req.body.fecha,
     hora: req.body.hora,
     }
 
-    console.log(element.fecha)
-    console.log(element.hora)
+    //console.log(dia.fecha)
+    //console.log(dia.hora)
 
    
     let errores=[]
@@ -64,7 +64,7 @@ rtMain.post("/procesar", function (req, res){
     let fecha = req.body.fecha
     let f= new Date()
     
-    let fechaactual=f.getFullYear() + "-0" + (f.getMonth() +1) + "-0" + f.getDate() ; console.log("esta es la fecha actual" +fechaactual)
+    let fechaactual=f.getFullYear() + "-0" + (f.getMonth() +1) + "-0" + f.getDate() ; console.log("Esta es la fecha actual :" +fechaactual)
     
     if(fecha < fechaactual){errores.push({ mensaje4: "Introduzca una fecha válida: debe ser superior a la fecha actual."})}
 
@@ -83,7 +83,7 @@ if (errores.length!==0) res.render("errores", {errores})
        citas[i]
        console.log(citas[i].fecha)
        console.log(citas[i].hora)
-        if (citas[i].fecha===element.fecha && citas[i].hora===element.hora){   
+        if (citas[i].fecha===dia.fecha && citas[i].hora===dia.hora){   
             console.log("La fecha ya está reservada")
             res.render("citarepetida", {nombre: nombre, fecha: fecha, hora: hora})
             repeticion.push( citas[i])
