@@ -32,8 +32,7 @@ rtMain.post("/procesar", function (req, res){
     hora: req.body.hora,
     }
     
-    const json_Arrayfechas =fs.readFileSync("misfechas.json",  "utf-8")
-    let Arrayfechas=JSON.parse(json_Arrayfechas)
+
 
     let element =  {
     fecha: req.body.fecha,
@@ -65,38 +64,29 @@ rtMain.post("/procesar", function (req, res){
     let fecha = req.body.fecha
     let f= new Date()
     
-    let fechaactual=f.getFullYear() + "-" + (f.getMonth() +1) + "-" + f.getDate() ;
+    let fechaactual=f.getFullYear() + "-0" + (f.getMonth() +1) + "-0" + f.getDate() ; console.log("esta es la fecha actual" +fechaactual)
     
     if(fecha < fechaactual){errores.push({ mensaje4: "Introduzca una fecha válida: debe ser superior a la fecha actual."})}
 
   
     let hora = req.body.hora
 
-
+//Enviar errores
 
 if (errores.length!==0) res.render("errores", {errores})
 
 
 //Comprobar que fecha y hora no se repite
 
-
-     if(Arrayfechas.includes(element)){
-        
-        console.log("La fecha ya está reservada")
-        res.render("citarepetida", {nombre: nombre, element})
-
-    } 
-
-
    let repeticion=[] 
-    for (let i = 0; i < Arrayfechas.length; i++) {
-       Arrayfechas[i]
-       console.log(Arrayfechas[i].fecha)
-       console.log(Arrayfechas[i].hora)
-        if (Arrayfechas[i].fecha===element.fecha && Arrayfechas[i].hora===element.hora){   
+    for (let i = 0; i < citas.length; i++) {
+       citas[i]
+       console.log(citas[i].fecha)
+       console.log(citas[i].hora)
+        if (citas[i].fecha===element.fecha && citas[i].hora===element.hora){   
             console.log("La fecha ya está reservada")
             res.render("citarepetida", {nombre: nombre, fecha: fecha, hora: hora})
-            repeticion.push( Arrayfechas[i])
+            repeticion.push( citas[i])
             console.log(repeticion)
 
         }
@@ -104,17 +94,15 @@ if (errores.length!==0) res.render("errores", {errores})
 
     
  
-    //Comprobar errores
+//Validar y crear la cita
 Validaciones()
 function Validaciones(){
     if (errores.length==0 && repeticion.length==0){
-        Arrayfechas.push(element)
+        
         citas.push(datosCita)
 
      
 
-        const json_Arrayfechas= JSON.stringify(Arrayfechas)
-        fs.writeFileSync("misfechas.json", json_Arrayfechas, "utf-8")
 
         const json_citas= JSON.stringify(citas)
         fs.writeFileSync("miscitas.json", json_citas, "utf-8")
