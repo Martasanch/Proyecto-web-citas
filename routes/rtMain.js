@@ -3,10 +3,10 @@ const app=express()
 const rtMain=express.Router()
 const fs =require("fs")
 
-
-
-//Aquí te creas las rutas get, post, etc... que necesites
-
+//Rutas html (Duda de si el html puede ir en routes)
+rtMain.get("/principal", function (req, res){
+    res.sendFile(__dirname + "/principal.html")
+})
 
 
 //Rutas de las plantillas hbs
@@ -14,6 +14,7 @@ const fs =require("fs")
 rtMain.get("/", function (req, res){
     res.render("home")
 })
+
 
 //Aquí las validaciones del formulario
 rtMain.post("/procesar", function (req, res){
@@ -64,7 +65,7 @@ rtMain.post("/procesar", function (req, res){
     let fecha = req.body.fecha
     let f= new Date()
     
-    let fechaactual=f.getFullYear() + "-0" + (f.getMonth() +1) + "-0" + f.getDate() ; console.log("Esta es la fecha actual :" +fechaactual)
+    let fechaactual=f.getFullYear() + "-0" + (f.getMonth() +1) + "-0" + f.getDate() ;
     
     if(fecha < fechaactual){errores.push({ mensaje4: "Introduzca una fecha válida: debe ser superior a la fecha actual."})}
 
@@ -80,9 +81,7 @@ if (errores.length!==0) res.render("errores", {errores})
 
    let repeticion=[] 
     for (let i = 0; i < citas.length; i++) {
-       citas[i]
-       console.log(citas[i].fecha)
-       console.log(citas[i].hora)
+    
         if (citas[i].fecha===dia.fecha && citas[i].hora===dia.hora){   
             console.log("La fecha ya está reservada")
             res.render("citarepetida", {nombre: nombre, fecha: fecha, hora: hora})

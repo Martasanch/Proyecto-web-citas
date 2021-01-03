@@ -1,38 +1,53 @@
 body {
-  background-color: #ffa8a8;
+  background-image: url("/images/huellas.jpg");
 }
 
 header {
-  position: fixed;
-  top: 0px;
-  left: 0px;
   width: 100%;
 }
 
 header nav {
-  background-color: #000;
-  border-bottom: 5px solid #F3D94E;
+  border-bottom: 5px solid pink;
+  background-color: #ffd5e9;
 }
 
-header a, header a:hover {
-  color: #F3D94E;
-  margin-left: 10px;
+header nav label {
+  font-family: "Sofia", sans-serif;
+  font-size: xx-large;
+}
+
+header nav a, header nav a:hover {
+  color: grey;
+  margin-left: 30px;
+  font-weight: bold;
+  font-size: large;
 }
 
 main .container {
-  margin-top: 100px;
+  border: 5px solid pink;
 }
 
 main .container .row {
-  background: #cfdd82;
+  background-color: #ffd5e9;
 }
 
-main .container .row .col-12 {
+main .container .row .titulo {
+  margin-top: 30px;
+  color: black;
+  font-family: "Sofia", sans-serif;
+}
+
+main .container .row .mensajes {
   padding-top: 50px;
   padding-bottom: 50px;
 }
 
-main .container .row .col-12 form {
+main .container .row .formulario {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+main .container .row .formulario form {
   width: 600px;
   font-size: 20px;
 }

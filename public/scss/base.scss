@@ -1,35 +1,64 @@
 
 
 body{
-    background-color: rgb(255, 168, 168);
+    
+    background-image: url("/images/huellas.jpg")
+    
 }
 
 header {
-    position: fixed;
-    top:0px;
-    left:0px;
+    
     width: 100%;
+   
     nav{
-        background-color: #000;
-        border-bottom:5px solid #F3D94E;
-    }    
-    a,a:hover{
-        color:#F3D94E;
-        margin-left:10px;
+        
+        border-bottom:5px solid pink;
+        background-color: rgb(255, 213, 233);
+
+        label{
+            font-family: "Sofia", sans-serif;
+            font-size: xx-large;
+
+        }
+       
+       
+        a,a:hover{
+            color:grey;
+            margin-left:30px;
+           font-weight: bold;
+            font-size: large;
+            
+            
+    }
     }
 }
 
 main{
     
     .container{
-        margin-top:100px;
+        border:5px solid pink;
+        
         .row{
             
-            background: rgb(207, 221, 130);
-          .col-12{
+            background-color: rgb(255, 213, 233);
+            
+            .titulo{
+                margin-top: 30px;
+                color: black;
+                font-family: "Sofia", sans-serif;
+                
+            }
+
+            .mensajes{
+                padding-top:50px;
+                padding-bottom: 50px;
+            }
+            
+          .formulario{
               padding-top:50px;
               padding-bottom: 50px;
               form{
+                  
                   width: 600px;
                   font-size: 20px;
                   }
