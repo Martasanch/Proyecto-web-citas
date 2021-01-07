@@ -5,16 +5,27 @@
          <div class="col-12 d-flex align-items-center justify-content-center titulo">
           <h1 class="font-effect-outline">Mucho te quiero perrito</h1>
         </div>
-        <div class="col-12 d-flex align-items-center justify-content-center mensajes">
+        <div class="col-8 d-flex align-items-center justify-content-center mensajes">
             <h4>
-              Hola {{nombre}}, su petición de cita se ha realizado correctamente.
-              Le esperamos el día {{fecha}} a las {{hora}}.<br>
+              Hola {{datosCita.nombre}}, su petición de cita se ha realizado correctamente.<br>
+              Le esperamos el día {{datosCita.fecha}} a las {{datosCita.hora}}.<br>
              ¡Gracias por reservar con nosotros!
             
             </h4>
-
+         </div>
+        <div class="col-4 d-flex align-items-center justify-content-center mensajes">
+                              <canvas id="canvas"></canvas>
+                
+                <script src="js/qrcode/build/qrcode.min.js"></script>
+                <script>
+                  QRCode.toCanvas(document.getElementById('canvas'), "{{datosCita.nombre}}", function (error) {
+                    if (error) console.error(error)
+                    console.log('success!');
+                  })
+                </script> 
         </div>
         
+
         <div class="col-12 d-flex align-items-center justify-content-center mensajes">
           <form method="get" action="/">
             <button class= "btn btn-secondary">Volver a la página principal</button>

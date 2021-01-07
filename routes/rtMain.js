@@ -2,6 +2,7 @@ const express= require("express")
 const app=express()
 const rtMain=express.Router()
 const fs =require("fs")
+var QRCode = require('qrcode')
 
 //Rutas html (Duda de si el html puede ir en routes)
 rtMain.get("/principal", function (req, res){
@@ -35,14 +36,7 @@ rtMain.post("/procesar", function (req, res){
     
 
 
-    let dia =  {
-    fecha: req.body.fecha,
-    hora: req.body.hora,
-    }
-
-    //console.log(dia.fecha)
-    //console.log(dia.hora)
-
+  
    
     let errores=[]
 
@@ -65,7 +59,8 @@ rtMain.post("/procesar", function (req, res){
     let fecha = req.body.fecha
     let f= new Date()
     
-    let fechaactual=f.getFullYear() + "-0" + (f.getMonth() +1) + "-0" + f.getDate() ;
+    let fechaactual=f.getFullYear() + "-0" + (f.getMonth() +1) + "-0" + f.getDate()
+    console.log(fechaactual)
     
     if(fecha < fechaactual){errores.push({ mensaje4: "Introduzca una fecha válida: debe ser superior a la fecha actual."})}
 
@@ -82,9 +77,9 @@ if (errores.length!==0) res.render("errores", {errores})
    let repeticion=[] 
     for (let i = 0; i < citas.length; i++) {
     
-        if (citas[i].fecha===dia.fecha && citas[i].hora===dia.hora){   
+        if (citas[i].fecha==datosCita.fecha && citas[i].hora===datosCita.hora){   
             console.log("La fecha ya está reservada")
-            res.render("citarepetida", {nombre: nombre, fecha: fecha, hora: hora})
+            res.render("citarepetida", {nombre, fecha, hora})
             repeticion.push( citas[i])
             console.log(repeticion)
 
@@ -106,7 +101,7 @@ function Validaciones(){
         const json_citas= JSON.stringify(citas)
         fs.writeFileSync("miscitas.json", json_citas, "utf-8")
         //Enviar datos
-        res.render("resultado", {nombre: nombre, fecha:fecha, hora:hora})
+        res.render("resultado", {datosCita})
     }
   
 }
