@@ -51,10 +51,19 @@
                     </div>
                   </div>       
                   <div class="form-group row">
-                    <label for="hora" class="col-4 col-form-label">Seleccione una hora entre las 10:00 y las 14:00</label> 
+                    <label for="hora" class="col-4 col-form-label">Seleccione una hora</label> 
                     <div class="col-8">
                       <div class="input-group">
-                        <input id="hora" name="hora"  type="time" min="10:00" max="14:00" step="3600" class="form-control"> 
+                        <select id="hora" name="hora">
+                        <option value="" selected="selected">- Elija su hora -</option>
+                        
+                        <option value="10:00">10:00</option>
+                        <option value="11:00">11:00</option>
+                        <option value="12:00">12:00</option>
+                        <option value="13:00">13:00</option>
+                        <option value="14:00">14:00</option>
+                        
+                        </select>
                         <div class="input-group-append">
                           
                         </div>
@@ -96,7 +105,7 @@
 
                           var calendar = new FullCalendar.Calendar(calendarEl, {
                             initialView: 'dayGridMonth',
-                            initialDate: '2020-12-07',
+                            initialDate: '2021-01-01',
                             headerToolbar: {
                               left: 'prev,next today',
                               center: 'title',
@@ -106,12 +115,12 @@
                             events: [
                              {{#each citas}}
                               {
-                                title: "{{nombre}}",
+                                title: "{{hora}}",
                                 start: "{{fecha}}"
                               },
                             {{/each}}
                             ]
-                            
+                           
                           });
 
                           calendar.render();
@@ -123,11 +132,13 @@
       <div id='calendar'></div>
         
         
-        <ul>
+      {{!--   <ul>
             {{#each citas}}
             <li>{{fecha}}</li>
             {{/each}}
-          </ul>
+          </ul> --}}
+
+
       </div>
     </div>
   

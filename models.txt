@@ -1,0 +1,39 @@
+module.exports=class Cita {
+
+
+
+    constructor(name,lastName,email,phone,date,hour){
+        this.name=name
+        this.lastName=lastName
+        this.email=email
+        this.phone=phone
+        this.date=date
+        this.hour=hour
+        this.id=this.genAleatorio()
+    }
+
+    genAleatorio(){
+        let clave='a5K87F'
+        //Math.random()
+        //generamos una clave alfanumérica de 5 caracteres que será el identificador único de cada cita.
+        return clave
+    }
+
+
+    setName(name){
+        if(name!=''){
+            this.#name=name
+            return this.#name
+        }else{
+            return 'El nombre no debe estar vacío'
+        }
+    }
+    setLastName(lastname){
+        if(lastname!=''){
+            this.#lastname=lastname
+            return this.#lastname
+        }else{
+            return 'El apellido no debe estar vacío'
+        }        
+    }    
+}

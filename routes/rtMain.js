@@ -2,27 +2,68 @@ const express= require("express")
 const app=express()
 const rtMain=express.Router()
 const fs =require("fs")
-var QRCode = require('qrcode')
+const QRCode = require('qrcode')
+const { v4: uuidv4 } = require('uuid')
+
+let citas=JSON.parse(fs.readFileSync("miscitas.json",  "utf-8"))
 
 
 //Rutas de las plantillas hbs
 
 rtMain.get("/", function (req, res){
-   
-    let citas=JSON.parse(fs.readFileSync("miscitas.json",  "utf-8"))
-
     res.render("home", {citas})
 })
 
+rtMain.get("/modificarcita", function (req, res){
+    res.render("modificarcita", {citas})
+})
+
+rtMain.get("/vercita", function (req, res){
+    res.render("vercita", {citas})
+})
+
+
+
+//Aquí las validaciones de id
+
+rtMain.post("/modificar", function (req, res){
+
+    
+    let miId=req.body.id
+    let citaIdentificada=[]
+    
+    for (let i = 0; i < citas.length; i++) {
+    
+        if (citas[i].id==miId){   
+            console.log("el id es correcto")
+            citaIdentificada.push=citas[i]
+            
+            let fecha=citas[i].fecha
+            let hora=citas[i].hora
+            let nombre=citas[i].nombre
+            res.render("eliminar", {fecha , hora, nombre})
+
+                //Elimino la cita
+                rtMain.get("/citaeliminada", function (req, res){
+                   citas.splice(i)
+                   console.log(citas)
+                    res.render("citaeliminada")
+    
+                    })
+        
+        }
+        else console.log("el id no es correcto")
+    }            
+
+
+})
 
 //Aquí las validaciones del formulario
 rtMain.post("/procesar", function (req, res){
 
-
-    
-   
  
-    let citas=JSON.parse(fs.readFileSync("miscitas.json",  "utf-8"))
+
+  
 
     let datosCita={
     nombre: req.body.nombre,
@@ -31,9 +72,9 @@ rtMain.post("/procesar", function (req, res){
     fecha: req.body.fecha,
     hora: req.body.hora,
     }
-    let id= citas.length + 1001
+    let id= uuidv4()
     console.log(id)
-    datosCita.id = id
+    datosCita.id = id.substr(-12)
     console.log(datosCita)
 
 
