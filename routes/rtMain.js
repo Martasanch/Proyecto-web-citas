@@ -49,7 +49,7 @@ rtMain.post("/modificar", function (req, res){
                    console.log(citas)
                     res.render("citaeliminada")
     
-                    })
+                })
         
         }
         else console.log("el id no es correcto")
@@ -161,7 +161,6 @@ module.exports=rtMain
 
 
 
-//EJERCICIO 3: En el ejercicio de citas, añadir el campo HORARIO para elegir la hora de la reserva. Cuando alguien seleccione un día en el calendario, deberán cargarse SÓLAMENTE LAS HORAS QUE ESTÁN LIBRES ESE DÍA en el campo HORARIO.
 
 
 
