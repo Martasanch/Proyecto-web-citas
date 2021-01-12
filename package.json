@@ -15,5 +15,13 @@
     "qrcode": "^1.4.4"
   },
   "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Martasanch/Proyecto-web-citas.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Martasanch/Proyecto-web-citas/issues"
+  },
+  "homepage": "https://github.com/Martasanch/Proyecto-web-citas#readme",
   "description": ""
 }

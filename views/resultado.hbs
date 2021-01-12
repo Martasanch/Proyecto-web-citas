@@ -9,8 +9,8 @@
             <h4>
               Hola {{datosCita.nombre}}, su petición de cita se ha realizado correctamente.<br>
               Le esperamos el día {{datosCita.fecha}} a las {{datosCita.hora}}.<br>
-             ¡Gracias por reservar con nosotros!
-            
+              El identificador de su cita es {{datosCita.id}}, guardeló por si desea realizar alguna modificación.
+             ¡Gracias por reservar con nosotros! 
             </h4>
          </div>
         <div class="col-4 d-flex align-items-center justify-content-center mensajes">
@@ -18,12 +18,22 @@
                 
                 <script src="js/qrcode/build/qrcode.min.js"></script>
                 <script>
+                  console.log("{{datosCita}}")
                   QRCode.toCanvas(document.getElementById('canvas'), "{{datosCita.nombre}}", function (error) {
                     if (error) console.error(error)
                     console.log('success!');
                   })
                 </script> 
         </div>
+
+         <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h5>Si desea modificar la cita, pulse aquí <a href="http://localhost:3000/modificarcita/{{datosCita.id}}">Cambiar Cita</a></h5>
+        </div>
+      </div>
+    </div>
+           
         
 
         <div class="col-12 d-flex align-items-center justify-content-center mensajes">

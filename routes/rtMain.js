@@ -4,16 +4,14 @@ const rtMain=express.Router()
 const fs =require("fs")
 var QRCode = require('qrcode')
 
-//Rutas html (Duda de si el html puede ir en routes)
-rtMain.get("/principal", function (req, res){
-    res.sendFile(__dirname + "/principal.html")
-})
-
 
 //Rutas de las plantillas hbs
 
 rtMain.get("/", function (req, res){
-    res.render("home")
+   
+    let citas=JSON.parse(fs.readFileSync("miscitas.json",  "utf-8"))
+
+    res.render("home", {citas})
 })
 
 
@@ -23,8 +21,8 @@ rtMain.post("/procesar", function (req, res){
 
     
    
-    const json_citas =fs.readFileSync("miscitas.json",  "utf-8")
-    let citas=JSON.parse(json_citas)
+ 
+    let citas=JSON.parse(fs.readFileSync("miscitas.json",  "utf-8"))
 
     let datosCita={
     nombre: req.body.nombre,
@@ -33,7 +31,10 @@ rtMain.post("/procesar", function (req, res){
     fecha: req.body.fecha,
     hora: req.body.hora,
     }
-    
+    let id= citas.length + 1001
+    console.log(id)
+    datosCita.id = id
+    console.log(datosCita)
 
 
   
@@ -59,7 +60,7 @@ rtMain.post("/procesar", function (req, res){
     let fecha = req.body.fecha
     let f= new Date()
     
-    let fechaactual=f.getFullYear() + "-0" + (f.getMonth() +1) + "-0" + f.getDate()
+    let fechaactual=f.getFullYear() + "-0" + (f.getMonth() +1) + "-" + f.getDate()
     console.log(fechaactual)
     
     if(fecha < fechaactual){errores.push({ mensaje4: "Introduzca una fecha válida: debe ser superior a la fecha actual."})}
@@ -109,13 +110,17 @@ function Validaciones(){
 })
 
 
-
+rtMain.get('/modificarcita/:id', (req,res)=>{
+    let id=req.params.id
+    res.send("Ha seleccionado modificar la cita " + id)
+})
 
 
 module.exports=rtMain
 
 
 
+//EJERCICIO 3: En el ejercicio de citas, añadir el campo HORARIO para elegir la hora de la reserva. Cuando alguien seleccione un día en el calendario, deberán cargarse SÓLAMENTE LAS HORAS QUE ESTÁN LIBRES ESE DÍA en el campo HORARIO.
 
 
 
