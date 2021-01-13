@@ -51,4 +51,9 @@ main .container .row .formulario form {
   width: 600px;
   font-size: 20px;
 }
+
+main .container .row .formulario form #hora {
+  font-size: 16px;
+  color: #4b4a4a;
+}
 /*# sourceMappingURL=base.css.map */

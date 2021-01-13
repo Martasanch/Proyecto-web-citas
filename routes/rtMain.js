@@ -15,14 +15,27 @@ rtMain.get("/", function (req, res){
 })
 
 rtMain.get("/modificarcita", function (req, res){
-    res.render("modificarcita", {citas})
+    res.render("modificarcita")
 })
 
 rtMain.get("/vercita", function (req, res){
-    res.render("vercita", {citas})
+    res.render("vercita")
 })
 
 
+//Aquí las validaciones del envío del email para ver sus citas
+rtMain.post("/ver", function (req, res){
+
+    let miEmail=req.body.email
+    console.log(miEmail)
+    let citasEncontradas=citas.filter(cita=>cita.email==miEmail)
+    console.log(citasEncontradas)
+
+    res.render("mostrarcitas", {citasEncontradas})
+  
+
+
+})
 
 //Aquí las validaciones de id
 
@@ -30,13 +43,13 @@ rtMain.post("/modificar", function (req, res){
 
     
     let miId=req.body.id
-    let citaIdentificada=[]
+    
     
     for (let i = 0; i < citas.length; i++) {
     
         if (citas[i].id==miId){   
             console.log("el id es correcto")
-            citaIdentificada.push=citas[i]
+            
             
             let fecha=citas[i].fecha
             let hora=citas[i].hora
