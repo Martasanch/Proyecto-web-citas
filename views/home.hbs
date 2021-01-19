@@ -5,6 +5,8 @@
         <div class="col-12 d-flex align-items-center justify-content-center titulo">
           <h1 class="font-effect-outline">Mucho te quiero perrito</h1>
         </div>
+        <div class="col-12 col-sm-6">
+        
         <div class="col-12 d-flex align-items-center justify-content-center formulario">
           <form method="post" action="/procesar">
                   <div class="form-group row">
@@ -77,9 +79,13 @@
                   </div>
 
           </form>
-            
+         </div> 
+         </div>  
 
-         
+          <div class="col-12 col-sm-6">
+      <div id='calendar'></div>
+        
+      
         </div>
       </div>
     </div>
@@ -88,6 +94,7 @@
 {{!-- CALENDARIO DE FECHAS RESERVADAS --}}
      <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.5.0/main.min.css' rel='stylesheet' />
       <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.5.0/main.min.js'></script>
+      
 
                         <style>
                           #calendar {
@@ -130,18 +137,7 @@
 
                       </script>
     <div class="row">
-      <div class="col-12">
-      <div id='calendar'></div>
-        
-        
-      {{!--   <ul>
-            {{#each citas}}
-            <li>{{fecha}}</li>
-            {{/each}}
-          </ul> --}}
-
-
-      </div>
+     
     </div>
   
    

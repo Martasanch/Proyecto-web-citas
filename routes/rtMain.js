@@ -65,7 +65,15 @@ rtMain.post("/modificar", function (req, res){
                 })
         
         }
-        else console.log("el id no es correcto")
+        else {
+            console.log("el id no es correcto")
+         
+            
+            
+            
+
+
+        }
     }            
 
 
@@ -165,8 +173,18 @@ function Validaciones(){
 
 
 rtMain.get('/modificarcita/:id', (req,res)=>{
-    let id=req.params.id
-    res.send("Ha seleccionado modificar la cita " + id)
+    let Id=req.params.id
+    //res.send("Ha seleccionado modificar la cita " + id)
+    let citaporId=citas.find(cita=>cita.id==Id)
+    console.log(citaporId)
+    var i = citas.indexOf(citaporId);
+    console.log(i)
+    citas.splice( i, 1 );
+    console.log(citas)
+   
+                 
+
+    res.render("citaeliminada"/*,  {citaporId} */)
 })
 
 

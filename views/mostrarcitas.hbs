@@ -14,7 +14,12 @@
               {{#each citasEncontradas}}
               <ul>
               <li>
+                
                 El día {{fecha}} a las {{hora}}
+               
+                
+                <h5>Si desea eliminar su cita, pulse aquí <a href="http://localhost:3000/modificarcita/{{id}}" class="btn btn-secondary">Eliminar</a></h5>
+              
               </li>
               </ul>
               {{/each}}
