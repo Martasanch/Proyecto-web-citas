@@ -2,7 +2,7 @@ const express= require("express")
 const rtCitas=express.Router()
 const fs =require("fs")
 const QRCode = require('qrcode')
-const { v4: uuidv4 } = require('uuid')
+
 const Cita=require('../models/Cita')
 
 let citas=JSON.parse(fs.readFileSync("miscitas.json",  "utf-8"))
@@ -11,7 +11,7 @@ let citas=JSON.parse(fs.readFileSync("miscitas.json",  "utf-8"))
 //Rutas de las plantillas hbs
 
 rtCitas.get("/nueva", function (req, res){
-    res.render("home", {citas})
+    res.render("principal", {citas})
 })
 
 rtCitas.get("/modificarcita", function (req, res){
@@ -36,8 +36,27 @@ rtCitas.post("/ver", function (req, res){
 
 
 })
+//Eliminar cita desde búsqueda por email
+rtCitas.get('/modificarcita/:id', (req,res)=>{
+    let Id=req.params.id
+    
+    let citaporId=citas.find(cita=>cita.id==Id)
+    
+    var i = citas.indexOf(citaporId);
+    
+    citas.splice( i, 1 );
+    
+   
+    const json_citas= JSON.stringify(citas)
+    fs.writeFileSync("miscitas.json", json_citas, "utf-8")             
 
-//Aquí las validaciones de id
+    res.render("citaeliminada")
+})
+
+
+
+
+//LOCALIACION Y ELIMINACION DE CITA POR ID
 
 rtCitas.post("/modificar", function (req, res){
 
@@ -59,7 +78,9 @@ rtCitas.post("/modificar", function (req, res){
                 //Elimino la cita
                 rtCitas.get("/citaeliminada", function (req, res){
                    citas.splice(i)
-                   console.log(citas)
+                   
+                           
+                fs.writeFileSync("miscitas.json", JSON.stringify(citas), "utf-8")  
                     res.render("citaeliminada")
     
                 })
@@ -68,11 +89,7 @@ rtCitas.post("/modificar", function (req, res){
         else {
             console.log("el id no es correcto")
          
-            
-            
-            
-
-
+      
         }
     }            
 
@@ -85,13 +102,7 @@ rtCitas.post("/procesar", function (req, res){
  
     let datosCita=new Cita(req.body)
   
-    let id= uuidv4()
-    console.log(id)
-    datosCita.id = id.substr(-12)
-    console.log(datosCita)
-
-
-  
+    
    
     let errores=[]
 
@@ -153,8 +164,8 @@ function Validaciones(){
      
 
 
-        const json_citas= JSON.stringify(citas)
-        fs.writeFileSync("miscitas.json", json_citas, "utf-8")
+        
+        fs.writeFileSync("miscitas.json", JSON.stringify(citas), "utf-8")
         //Enviar datos
         res.render("resultado", {datosCita})
     }
@@ -164,20 +175,7 @@ function Validaciones(){
 })
 
 
-rtCitas.get('/modificarcita/:id', (req,res)=>{
-    let Id=req.params.id
-    //res.send("Ha seleccionado modificar la cita " + id)
-    let citaporId=citas.find(cita=>cita.id==Id)
-    console.log(citaporId)
-    var i = citas.indexOf(citaporId);
-    console.log(i)
-    citas.splice( i, 1 );
-    console.log(citas)
-   
-                 
 
-    res.render("citaeliminada"/*,  {citaporId} */)
-})
 
 
 module.exports=rtCitas

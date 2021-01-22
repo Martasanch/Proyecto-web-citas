@@ -42,6 +42,11 @@ main .container .row .mensajes {
   padding-bottom: 50px;
 }
 
+main .container .row .imagenes {
+  
+  border: solid white 3px;
+  
+}
 main .container .row .formulario {
   padding-top: 50px;
   padding-bottom: 50px;

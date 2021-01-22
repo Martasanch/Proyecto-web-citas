@@ -16,7 +16,7 @@
         <div class="col-4 d-flex align-items-center justify-content-center mensajes">
                               <canvas id="canvas"></canvas>
                 
-                <script src="js/qrcode/build/qrcode.min.js"></script>
+                <script src="/js/qrcode/build/qrcode.min.js"></script>
                 <script>
                   console.log("{{datosCita}}")
                   QRCode.toCanvas(document.getElementById('canvas'), "{{datosCita.nombre}}", function (error) {
@@ -26,18 +26,18 @@
                 </script> 
         </div>
 
-         <div class="container">
+{{!--          <div class="container">
       <div class="row">
         <div class="col-12">
           <h5>Si desea modificar la cita, pulse aquí <a href="http://localhost:3000/citas/modificarcita/{{datosCita.id}}">Cambiar Cita</a></h5>
         </div>
       </div>
-    </div>
+    </div> --}}
            
         
 
         <div class="col-12 d-flex align-items-center justify-content-center mensajes">
-          <form method="get" action="/nueva">
+          <form method="get" action="/citas/nueva">
             <button class= "btn btn-secondary">Volver a la página principal</button>
             </form>
         </div>
