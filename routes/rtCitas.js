@@ -2,10 +2,10 @@ const express= require("express")
 const rtCitas=express.Router()
 const fs =require("fs")
 const QRCode = require('qrcode')
-
+const daoCitas=require('../dao/daoCitas')
 const Cita=require('../models/Cita')
 
-let citas=JSON.parse(fs.readFileSync("miscitas.json",  "utf-8"))
+let citas=JSON.parse(fs.readFileSync("./dao/miscitas.json",  "utf-8"))
 
 
 //Rutas de las plantillas hbs
@@ -27,9 +27,8 @@ rtCitas.get("/vercita", function (req, res){
 rtCitas.post("/ver", function (req, res){
 
     let miEmail=req.body.email
-    console.log(miEmail)
     let citasEncontradas=citas.filter(cita=>cita.email==miEmail)
-    console.log(citasEncontradas)
+   
 
     res.render("mostrarcitas", {citasEncontradas})
   
@@ -39,20 +38,18 @@ rtCitas.post("/ver", function (req, res){
 //Eliminar cita desde búsqueda por email
 rtCitas.get('/modificarcita/:id', (req,res)=>{
     let Id=req.params.id
-    
     let citaporId=citas.find(cita=>cita.id==Id)
-    
     var i = citas.indexOf(citaporId);
     
     citas.splice( i, 1 );
-    
    
-    const json_citas= JSON.stringify(citas)
-    fs.writeFileSync("miscitas.json", json_citas, "utf-8")             
+   
+    //Actualizo la base de datos         
+    fs.writeFileSync("dao/miscitas.json", JSON.stringify(citas), "utf-8")  
+    res.render("citaeliminada")        
 
-    res.render("citaeliminada")
+    
 })
-
 
 
 
@@ -60,82 +57,37 @@ rtCitas.get('/modificarcita/:id', (req,res)=>{
 
 rtCitas.post("/modificar", function (req, res){
 
-    
     let miId=req.body.id
-    
-    
-    for (let i = 0; i < citas.length; i++) {
-    
-        if (citas[i].id==miId){   
-            console.log("el id es correcto")
-            
-            
-            let fecha=citas[i].fecha
-            let hora=citas[i].hora
-            let nombre=citas[i].nombre
-            res.render("eliminar", {fecha , hora, nombre})
+    let citaporId=citas.find(cita=>cita.id==miId)
+    var i = citas.indexOf(citaporId);
+    if (citaporId==undefined){
+        res.render("sincitaasociada")
+    }
+    else res.render("eliminar", {citaporId})
 
-                //Elimino la cita
-                rtCitas.get("/citaeliminada", function (req, res){
-                   citas.splice(i)
+        //Elimino la cita
+        rtCitas.get("/citaeliminada", function (req, res){
+           citas.splice(i, 1)
                    
-                           
-                fs.writeFileSync("miscitas.json", JSON.stringify(citas), "utf-8")  
-                    res.render("citaeliminada")
+        //Actualizo la base de datos         
+        fs.writeFileSync("dao/miscitas.json", JSON.stringify(citas), "utf-8")  
+        res.render("citaeliminada")
     
-                })
-        
-        }
-        else {
-            console.log("el id no es correcto")
-         
-      
-        }
-    }            
-
-
+        })
+ 
 })
+
+
 
 //Aquí las validaciones del formulario
 rtCitas.post("/procesar", function (req, res){
 
- 
     let datosCita=new Cita(req.body)
-  
-    
-   
-    let errores=[]
-
-//Validar Nombre
-    let nombre = req.body.nombre
-    if (nombre=="") errores.push({ mensaje1: "El campo nombre no puede estar vacío."})
-
-//Validar email 
-    let email=req.body.email
-    emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i
-    if(emailRegex.test(email)){console.log("El email es correcto.")}
-    
-    else{errores.push({ mensaje2: "El campo email es incorrecto, introduzca un formato válido."})}
-
-//Validar Teléfono
-    let telefono=req.body.telefono
-    if (telefono=="") errores.push({ mensaje3: "El campo teléfono no puede estar vacío."})
-
-//Validar fecha 
-    let fecha = req.body.fecha
-    let f= new Date()
-    
-    let fechaactual=f.getFullYear() + "-0" + (f.getMonth() +1) + "-" + f.getDate()
-    console.log(fechaactual)
-    
-    if(fecha < fechaactual){errores.push({ mensaje4: "Introduzca una fecha válida: debe ser superior a la fecha actual."})}
-
-  
-    let hora = req.body.hora
-
+    let errores=datosCita.validar()
+ 
 //Enviar errores
 
-if (errores.length!==0) res.render("errores", {errores})
+if (errores.length!==0) res.render("principal", {errores, citas})
 
 
 //Comprobar que fecha y hora no se repite
@@ -145,37 +97,24 @@ if (errores.length!==0) res.render("errores", {errores})
     
         if (citas[i].fecha==datosCita.fecha && citas[i].hora===datosCita.hora){   
             console.log("La fecha ya está reservada")
-            res.render("citarepetida", {nombre, fecha, hora})
-            repeticion.push( citas[i])
-            console.log(repeticion)
-
+            res.render("citarepetida", {datosCita})
+            repeticion.push(citas[i])
         }
     }            
 
     
  
-//Validar y crear la cita
-Validaciones()
-function Validaciones(){
+//Crear y guardar la cita
+
     if (errores.length==0 && repeticion.length==0){
         
-        citas.push(datosCita)
-
-     
-
-
-        
-        fs.writeFileSync("miscitas.json", JSON.stringify(citas), "utf-8")
-        //Enviar datos
-        res.render("resultado", {datosCita})
+       daoCitas.guardar(datosCita)
+       .then(cita=>res.render("resultado", {datosCita}))
     }
   
-}
+
 
 })
-
-
-
 
 
 module.exports=rtCitas

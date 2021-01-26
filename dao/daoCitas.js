@@ -1,31 +1,24 @@
 const Cita = require('../models/Cita')
 const fs =require("fs")
+const { rejects } = require('assert')
 const daoCitas={}
 
 
-//funcion para guardar citas
-daoCitas.guardar= function guardar(cita){
-    return new Promise((resolved,reject)=>{
-
-        //Creamos un array y lo llenamos con lo que tenga el archivo citas
-        let citas=[]
-        citas=JSON.parse(fs.readFileSync("todascitas.json",  "utf-8"))
-        //push
-        citas.push(cita)
-        //guardamos de nuevo el array en el archivo
-       
-        fs.writeFile("todascitas.json", JSON.stringify(citas), "utf-8")
-
-    resolved(cita)
-
+daoCitas.guardar = function guardar(cita){
+    return new Promise((resolved, reject) => {
+        let citas = []
+        fs.readFile('./dao/miscitas.json',(err,data)=>{
+            if(err)reject(err)
+            if(data!="") citas=JSON.parse(data)
+            citas.push(cita)
+            fs.writeFile('./dao/miscitas.json', JSON.stringify(citas),(err)=>{
+                if(err)reject(err)
+                resolved(cita)
+          })
+       })
     })
-
 }
-//funcion para modificar citas
 
-//funcion para buscar citas por id
-
-//funcion para buscar citas por email
 
 
 

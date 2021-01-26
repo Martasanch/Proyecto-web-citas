@@ -7,7 +7,7 @@
           <h1 class="font-effect-outline">Mucho te quiero perrito</h1>
          </div>
         <div class="col-12  mensajes">
-            <h4>Lo sentimos, {{nombre}}. El día {{fecha}}, a las {{hora}} ya ha sido reservado.<br>
+            <h4>Lo sentimos, {{datosCita.nombre}}. El día {{datosCita.fecha}}, a las {{datosCita.hora}} ya ha sido reservado.<br>
             Por favor, seleccione una nueva cita.<br>
             </h4>
               
@@ -16,7 +16,7 @@
     </div>
     <div class="row d-flex align-items-center justify-content-center">
         <div class="col-12 d-flex align-items-center justify-content-center mensajes">
-            <form method="get" action="/nueva">
+            <form method="get" action="/citas/nueva">
             <button class= "btn btn-secondary">Volver al formulario</button>
             </form>
         </div>
